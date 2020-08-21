@@ -43,10 +43,16 @@ class _MinecraftServerPageState extends State<MinecraftServerPage> {
   int _currentIndex = 0;
   List<DataRow> dataRows;
 
+  List<Future<MinecraftServer>> futureServer = [];
+
   @override
   void initState() {
     SystemChrome.setEnabledSystemUIOverlays([]);
     super.initState();
+    futureServer.add(MakeMinecraftServer().fetchServerDetails(
+        "sams.serverminer.com", 27168, "Slimefun Survival"));
+    futureServer.add(MakeMinecraftServer()
+        .fetchServerDetails("sams.serverminer.com", 25749, "Hub"));
   }
 
   Widget build(BuildContext context) {
@@ -82,19 +88,29 @@ class _MinecraftServerPageState extends State<MinecraftServerPage> {
                   TileMode.repeated, // repeats the gradient over the canvas
             ),
           ),
-          child: Stack(
-            children: [
-              Column(
-                children: [
-                  MinecraftServerHeader(),
-                  _buildBalance(),
-                  _buildServerList(),
-                  _buildPageIndicator(),
-                ],
-              ),
-              _buildPlayerList(),
-            ],
-          ),
+          child: FutureBuilder<MinecraftServer>(
+              future: futureServer[0],
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Stack(
+                    children: [
+                      Column(
+                        children: [
+                          MinecraftServerHeader(),
+                          _buildBalance(),
+                          _buildServerList(),
+                          _buildPageIndicator(),
+                        ],
+                      ),
+                      _buildPlayerList(),
+                    ],
+                  );
+                } else if (snapshot.hasError) {
+                  return Text("${snapshot.error}");
+                }
+                // By default, show a loading spinner.
+                return Text("Loading");
+              }),
         ));
   }
 
