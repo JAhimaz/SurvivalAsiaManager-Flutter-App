@@ -113,7 +113,7 @@ class MinecraftServerPlate extends StatelessWidget {
                   Row(children: [
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 0, vertical: 2),
-                      child: Text(server.playerList.length.toString(),
+                      child: Text(server.playersOnline.toString(),
                           style: Theme.of(context).textTheme.headline5.copyWith(
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
