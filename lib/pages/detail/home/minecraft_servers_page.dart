@@ -1,5 +1,4 @@
 import 'package:ServerStats/components/MinecraftServer/minecraft_server_plate.dart';
-import 'package:ServerStats/components/MinecraftServer/player_list.dart';
 import 'package:ServerStats/models/minecraft_server.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,10 +13,35 @@ class MinecraftServerPage extends StatefulWidget {
   _MinecraftServerPageState createState() => _MinecraftServerPageState();
 }
 
+class PlayerList {
+  List<DataRow> dataRows = [];
+
+  List<DataRow> getPlayerList(int _currentIndex) {
+    if (servers[_currentIndex].playerList.length == 0) {
+      dataRows.add(DataRow(cells: [
+        DataCell(Text("No Users", style: TextStyle(color: Colors.white))),
+        DataCell(Text("No Users", style: TextStyle(color: Colors.white)))
+      ]));
+
+      return dataRows;
+    }
+    for (var i = 0; i < servers[_currentIndex].playerList.length; i++) {
+      dataRows.add(DataRow(cells: [
+        DataCell(Text(servers[_currentIndex].playerList[i].playerName,
+            style: TextStyle(color: Colors.white))),
+        DataCell(Text(servers[_currentIndex].playerList[i].playerUUID,
+            style: TextStyle(color: Colors.white)))
+      ]));
+    }
+    return dataRows;
+  }
+}
+
 class _MinecraftServerPageState extends State<MinecraftServerPage> {
   PageController pageController = PageController(viewportFraction: 1.0);
 
   int _currentIndex = 0;
+  List<DataRow> dataRows;
 
   @override
   void initState() {
@@ -163,7 +187,7 @@ class _MinecraftServerPageState extends State<MinecraftServerPage> {
                                         color: Colors.white,
                                         fontSize: 15))),
                       ],
-                      rows: [],
+                      rows: PlayerList().getPlayerList(_currentIndex),
                     ),
                   ),
                 ));

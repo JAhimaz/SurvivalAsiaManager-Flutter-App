@@ -9,6 +9,7 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  random_string: ^2.1.0
   sliding_sheet: ^0.3.7
   smooth_page_indicator: ^0.1.5
   http: 0.12.2
