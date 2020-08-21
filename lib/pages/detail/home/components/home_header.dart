@@ -20,10 +20,16 @@ class HomeHeader extends StatelessWidget {
                 .headline5
                 .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
           ),
-          CircleAvatar(
-            radius: SizeConfig.defaultHeight * 2.5,
-            child: Image.asset("assets/images/survivalasia_logo.png"),
-            backgroundColor: Colors.transparent,
+          Material(
+            elevation: 18.0,
+            shape: CircleBorder(),
+            shadowColor: Colors.black.withOpacity(0.5),
+            color: Colors.transparent,
+            child: CircleAvatar(
+              radius: SizeConfig.defaultHeight * 3.5,
+              child: Image.asset("assets/images/survivalasia_logo.png"),
+              backgroundColor: Colors.transparent,
+            ),
           )
         ],
       ),
