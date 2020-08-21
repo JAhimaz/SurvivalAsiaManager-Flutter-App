@@ -2,6 +2,7 @@ import 'package:ServerStats/components/MinecraftServer/minecraft_server_plate.da
 import 'package:ServerStats/models/minecraft_server.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:sliding_sheet/sliding_sheet.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -36,6 +37,24 @@ class PlayerList {
 
 class _MinecraftServerPageState extends State<MinecraftServerPage> {
   PageController pageController = PageController(viewportFraction: 1.0);
+
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
+
+  void _onRefresh() async {
+    // monitor network fetch
+    await Future.delayed(Duration(milliseconds: 1000));
+    // if failed,use refreshFailed()
+    _refreshController.refreshCompleted();
+  }
+
+  void _onLoading() async {
+    // monitor network fetch
+    await Future.delayed(Duration(milliseconds: 1000));
+    // if failed,use loadFailed(),if no data return,use LoadNodata()
+    if (mounted) setState(() {});
+    _refreshController.loadComplete();
+  }
 
   int _currentIndex = 0;
   List<DataRow> dataRows;
@@ -93,13 +112,43 @@ class _MinecraftServerPageState extends State<MinecraftServerPage> {
                 if (snapshot.hasData) {
                   return Stack(
                     children: [
-                      Column(
-                        children: [
-                          MinecraftServerHeader(),
-                          _buildBalance(),
-                          _buildPageIndicator(),
-                          _buildServerList(),
-                        ],
+                      SmartRefresher(
+                        enablePullDown: true,
+                        enablePullUp: false,
+                        header: WaterDropHeader(
+                          waterDropColor: Color(0xFF3a1c71),
+                        ),
+                        footer: CustomFooter(
+                          builder: (BuildContext context, LoadStatus mode) {
+                            Widget body;
+                            if (mode == LoadStatus.idle) {
+                              body = Text("pull up load");
+                            } else if (mode == LoadStatus.loading) {
+                              body = CircularProgressIndicator();
+                            } else if (mode == LoadStatus.failed) {
+                              body = Text("Load Failed!Click retry!");
+                            } else if (mode == LoadStatus.canLoading) {
+                              body = Text("release to load more");
+                            } else {
+                              body = Text("No more Data");
+                            }
+                            return Container(
+                              height: 55.0,
+                              child: Center(child: body),
+                            );
+                          },
+                        ),
+                        controller: _refreshController,
+                        onRefresh: _onRefresh,
+                        onLoading: _onLoading,
+                        child: Column(
+                          children: [
+                            MinecraftServerHeader(),
+                            _buildBalance(),
+                            _buildPageIndicator(),
+                            _buildServerList(),
+                          ],
+                        ),
                       ),
                       _buildPlayerList(),
                     ],
