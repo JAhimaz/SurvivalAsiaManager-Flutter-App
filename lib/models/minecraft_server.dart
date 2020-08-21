@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -25,22 +26,42 @@ class MinecraftServer {
 List<MinecraftServer> servers = [
   MinecraftServer(
       id: 1,
-      serverName: "Test Server",
+      serverName: "Bungeecord",
       serverIP: "192.168.0.1",
       serverVersion: "1.16.2",
-      serverStatus: "Online",
+      serverStatus: "ON",
+      playerList: [],
+      pluginList: [],
+      playersOnline: 14,
+      maxPlayers: 500),
+  MinecraftServer(
+      id: 2,
+      serverName: "Hub",
+      serverIP: "192.168.0.2",
+      serverVersion: "1.16.2",
+      serverStatus: "ON",
+      playerList: [],
+      pluginList: [],
+      playersOnline: 3,
+      maxPlayers: 500),
+  MinecraftServer(
+      id: 3,
+      serverName: "Slimefun Survival",
+      serverIP: "192.168.0.2",
+      serverVersion: "1.16.2",
+      serverStatus: "ON",
       playerList: [],
       pluginList: [],
       playersOnline: 5,
-      maxPlayers: 10),
+      maxPlayers: 500),
   MinecraftServer(
-      id: 2,
-      serverName: "Test Server 2",
+      id: 4,
+      serverName: "Vanilla Survival",
       serverIP: "192.168.0.2",
       serverVersion: "1.16.2",
-      serverStatus: "Online",
+      serverStatus: "OFF",
       playerList: [],
       pluginList: [],
-      playersOnline: 6,
+      playersOnline: 9,
       maxPlayers: 500),
 ];

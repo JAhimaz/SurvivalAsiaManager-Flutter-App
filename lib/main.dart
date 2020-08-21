@@ -1,4 +1,4 @@
-import 'package:ServerStats/pages/detail/home/home_page.dart';
+import 'package:ServerStats/pages/detail/home/minecraft_servers_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: HomePage(),
+      home: MinecraftServerPage(),
     );
   }
 }

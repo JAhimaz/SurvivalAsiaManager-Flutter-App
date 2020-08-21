@@ -9,6 +9,8 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  sliding_sheet: ^0.3.7
+  smooth_page_indicator: ^0.1.5
   http: 0.12.2
   flutter:
     sdk: flutter

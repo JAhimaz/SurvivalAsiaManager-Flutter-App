@@ -3,6 +3,28 @@ import 'package:flutter/material.dart';
 
 import '../../size_config.dart';
 
+class StatusChecker extends StatelessWidget {
+  final String status;
+
+  StatusChecker({this.status});
+  @override
+  Widget build(BuildContext context) {
+    return ((() {
+      if (status.contains("ON")) {
+        return Text("ONLINE",
+            style: Theme.of(context).textTheme.headline5.copyWith(
+                fontWeight: FontWeight.bold,
+                color: Colors.green,
+                fontSize: 30));
+      }
+
+      return Text("OFFLINE",
+          style: Theme.of(context).textTheme.headline5.copyWith(
+              fontWeight: FontWeight.bold, color: Colors.red, fontSize: 30));
+    })());
+  }
+}
+
 class MinecraftServerPlate extends StatelessWidget {
   final MinecraftServer server;
 
@@ -36,11 +58,7 @@ class MinecraftServerPlate extends StatelessWidget {
                     Padding(
                       padding:
                           EdgeInsets.symmetric(horizontal: 0, vertical: 10),
-                      child: Text("ONLINE",
-                          style: Theme.of(context).textTheme.headline5.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.green,
-                              fontSize: 30)),
+                      child: StatusChecker(status: server.serverStatus),
                     ),
                   ]),
                   Row(
@@ -54,7 +72,7 @@ class MinecraftServerPlate extends StatelessWidget {
                                 .bodyText1
                                 .copyWith(color: Colors.white, fontSize: 18)),
                       ),
-                      Text("192.168.0.1",
+                      Text(server.serverIP,
                           style: Theme.of(context)
                               .textTheme
                               .bodyText1
@@ -72,7 +90,7 @@ class MinecraftServerPlate extends StatelessWidget {
                                 .bodyText1
                                 .copyWith(color: Colors.white, fontSize: 18)),
                       ),
-                      Text("1.16.2",
+                      Text(server.serverVersion,
                           style: Theme.of(context)
                               .textTheme
                               .bodyText1
@@ -95,13 +113,13 @@ class MinecraftServerPlate extends StatelessWidget {
                   Row(children: [
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 0, vertical: 2),
-                      child: Text("0",
+                      child: Text(server.playersOnline.toString(),
                           style: Theme.of(context).textTheme.headline5.copyWith(
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
                               fontSize: 30)),
                     ),
-                    Text(" / " + "50",
+                    Text(" / " + server.maxPlayers.toString(),
                         style: Theme.of(context).textTheme.headline5.copyWith(
                             fontWeight: FontWeight.bold,
                             color: Colors.orange,

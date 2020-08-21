@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../size_config.dart';
 
-class HomeHeader extends StatelessWidget {
+class MinecraftServerHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -14,7 +14,7 @@ class HomeHeader extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            "Minecraft Servers",
+            "Survival Asia Network",
             style: Theme.of(context)
                 .textTheme
                 .headline5
