@@ -20,7 +20,6 @@ class PlayerList {
     if (servers[_currentIndex].playerList.length == 0) {
       dataRows.add(DataRow(cells: [
         DataCell(Text("No Users", style: TextStyle(color: Colors.white))),
-        DataCell(Text("No Users", style: TextStyle(color: Colors.white)))
       ]));
 
       return dataRows;
@@ -29,8 +28,6 @@ class PlayerList {
       dataRows.add(DataRow(cells: [
         DataCell(Text(servers[_currentIndex].playerList[i].playerName,
             style: TextStyle(color: Colors.white))),
-        DataCell(Text(servers[_currentIndex].playerList[i].playerUUID,
-            style: TextStyle(color: Colors.white)))
       ]));
     }
     return dataRows;
@@ -49,10 +46,12 @@ class _MinecraftServerPageState extends State<MinecraftServerPage> {
   void initState() {
     SystemChrome.setEnabledSystemUIOverlays([]);
     super.initState();
+    futureServer.add(MakeMinecraftServer()
+        .fetchServerDetails("sams.serverminer.com", 25749, "Hub"));
     futureServer.add(MakeMinecraftServer().fetchServerDetails(
         "sams.serverminer.com", 27168, "Slimefun Survival"));
     futureServer.add(MakeMinecraftServer()
-        .fetchServerDetails("sams.serverminer.com", 25749, "Hub"));
+        .fetchServerDetails("sams.serverminer.com", 26934, "Vanilla Survival"));
   }
 
   Widget build(BuildContext context) {
@@ -98,8 +97,8 @@ class _MinecraftServerPageState extends State<MinecraftServerPage> {
                         children: [
                           MinecraftServerHeader(),
                           _buildBalance(),
-                          _buildServerList(),
                           _buildPageIndicator(),
+                          _buildServerList(),
                         ],
                       ),
                       _buildPlayerList(),
@@ -177,7 +176,7 @@ class _MinecraftServerPageState extends State<MinecraftServerPage> {
                         .repeated, // repeats the gradient over the canvas
                   ),
                 ),
-                height: SizeConfig.screenHeight,
+                height: 400,
                 child: Container(
                   width: SizeConfig.screenWidth,
                   //Temporary Till A For Loop Is Made
@@ -187,21 +186,21 @@ class _MinecraftServerPageState extends State<MinecraftServerPage> {
                       columns: [
                         DataColumn(
                             label: Text(
-                          "User",
+                          "Players",
                           style: Theme.of(context).textTheme.headline6.copyWith(
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
                               fontSize: 15),
                         )),
-                        DataColumn(
-                            label: Text("UUID",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline6
-                                    .copyWith(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                        fontSize: 15))),
+                        // DataColumn(
+                        //     label: Text("UUID",
+                        //         style: Theme.of(context)
+                        //             .textTheme
+                        //             .headline6
+                        //             .copyWith(
+                        //                 fontWeight: FontWeight.bold,
+                        //                 color: Colors.white,
+                        //                 fontSize: 15))),
                       ],
                       rows: PlayerList().getPlayerList(_currentIndex),
                     ),

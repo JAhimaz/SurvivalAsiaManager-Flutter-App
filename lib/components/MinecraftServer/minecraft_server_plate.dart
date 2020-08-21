@@ -10,7 +10,7 @@ class StatusChecker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ((() {
-      if (status.contains("ON")) {
+      if (status.contains("OK")) {
         return Text("ONLINE",
             style: Theme.of(context).textTheme.headline5.copyWith(
                 fontWeight: FontWeight.bold,

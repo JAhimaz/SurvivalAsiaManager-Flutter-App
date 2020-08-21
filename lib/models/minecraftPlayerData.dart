@@ -1,5 +1,5 @@
 class MCPlayerData {
-  String playerName, playerUUID;
+  String playerName;
 
-  MCPlayerData({this.playerName, this.playerUUID});
+  MCPlayerData({this.playerName});
 }
